@@ -1,5 +1,5 @@
 package pl.edu.agh.mwo;
-
+//Test zmian
 public class Scanner {
 
 	String text;
