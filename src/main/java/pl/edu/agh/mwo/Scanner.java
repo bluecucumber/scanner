@@ -2,10 +2,10 @@ package pl.edu.agh.mwo;
 //Test zmian
 public class Scanner {
 
-	String text;
+	String textToScan;
 
-	public Scanner(String init) {
-		text = init;
+	public Scanner(String textInitialValue) {
+		textToScan = textInitialValue;
 	}
 
 	public String get() {
@@ -14,28 +14,28 @@ public class Scanner {
 		String parentheses = "[()]";
 		String commentBegin = "%";
 		String commentEnd = "\n";
-		boolean ok = false;
-		while (!ok) {
-			if (text.length() == 0) {
+		boolean initialStringCheckOK = false;
+		while (!initialStringCheckOK) {
+			if (textToScan.length() == 0) {
 				return result;
-			} else if (text.substring(0, 1).matches(whiteChars)) {
-				text = text.substring(1);
-			} else if (text.substring(0, 1).matches(commentBegin)) {
-				while (!text.substring(0, 1).matches(commentEnd)) {
-					text = text.substring(1);
+			} else if (textToScan.substring(0, 1).matches(whiteChars)) {
+				textToScan = textToScan.substring(1);
+			} else if (textToScan.substring(0, 1).matches(commentBegin)) {
+				while (!textToScan.substring(0, 1).matches(commentEnd)) {
+					textToScan = textToScan.substring(1);
 				}
 			} else {
-				ok = true;
+				initialStringCheckOK = true;
 			}
 		}
 
-		if (text.length() > 0 && text.substring(0, 1).matches(parentheses)) {
-			result = text.substring(0, 1);
-			text = text.substring(1);
+		if (textToScan.length() > 0 && textToScan.substring(0, 1).matches(parentheses)) {
+			result = textToScan.substring(0, 1);
+			textToScan = textToScan.substring(1);
 		}
-		while (text.length() > 0 && !text.substring(0, 1).matches(whiteChars) && !text.substring(0, 1).matches(parentheses)) {
-			result += text.substring(0, 1);
-			text = text.substring(1);
+		while (textToScan.length() > 0 && !textToScan.substring(0, 1).matches(whiteChars) && !textToScan.substring(0, 1).matches(parentheses)) {
+			result += textToScan.substring(0, 1);
+			textToScan = textToScan.substring(1);
 		}
 		return result.toLowerCase();
 	}
