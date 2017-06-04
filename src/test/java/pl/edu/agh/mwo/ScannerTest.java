@@ -24,7 +24,7 @@ import junit.framework.TestCase;
 
 public class ScannerTest extends TestCase {
 
-	Scanner scanner1, scanner2, scanner3, scanner4;
+	Scanner scanner1, scanner2, scanner3, scanner4, scanner5;
 
 	@Before
 	protected void setUp() {
@@ -32,41 +32,45 @@ public class ScannerTest extends TestCase {
 		scanner2 = new Scanner("element1( \t\n element2)");
 		scanner3 = new Scanner("element1 %\t komentarz\nelement2");
 		scanner4 = new Scanner("fix \n \t");
+		scanner5 = new Scanner(")element1(");
 	}
 
 	@Test
 	public void testSekwencja() {
-		System.out.println("test1");
-		assertEquals("slowo1", scanner1.get());
-		assertEquals("slowo2", scanner1.get());
-		assertEquals("slowo3", scanner1.get());
-		assertEquals("", scanner1.get());
+		assertEquals("slowo1", scanner1.getToken());
+		assertEquals("slowo2", scanner1.getToken());
+		assertEquals("slowo3", scanner1.getToken());
+		assertEquals("", scanner1.getToken());
 	}
 
 	@Test
 	public void testBiale() {
-		System.out.println("test2");
-		assertEquals("element1", scanner2.get());
-		assertEquals("(", scanner2.get());
-		assertEquals("element2", scanner2.get());
-		assertEquals(")", scanner2.get());
-		assertEquals("", scanner2.get());
+		assertEquals("element1", scanner2.getToken());
+		assertEquals("(", scanner2.getToken());
+		assertEquals("element2", scanner2.getToken());
+		assertEquals(")", scanner2.getToken());
+		assertEquals("", scanner2.getToken());
 	}
 	
 	@Test
 	public void testKomentarz() {
-		System.out.println("test3");
-		assertEquals("element1", scanner3.get());
-		assertEquals("element2", scanner3.get());
-		assertEquals("", scanner3.get());
+		assertEquals("element1", scanner3.getToken());
+		assertEquals("element2", scanner3.getToken());
+		assertEquals("", scanner3.getToken());
 	}
 
 	@Test
 	public void testKoniec() {
-		System.out.println("test4");
-		assertEquals("fix", scanner4.get());
-		assertEquals("", scanner4.get());
-		assertEquals("", scanner4.get());
+		assertEquals("fix", scanner4.getToken());
+		assertEquals("", scanner4.getToken());
+		assertEquals("", scanner4.getToken());
 	}
 	
+	@Test
+	public void testParentheses() {
+		assertEquals(")", scanner5.getToken());
+		assertEquals("element1", scanner5.getToken());
+		assertEquals("(", scanner5.getToken());
+		assertEquals("", scanner5.getToken());
+	}
 }

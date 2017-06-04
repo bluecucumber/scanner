@@ -5,8 +5,9 @@ public class Scanner {
 	String textToScan;
 	private final String whiteChars = "[ \t\n]";
 	private final String commentBegin = "%";
-	private final String commentEnd = "\n";	
-
+	private final String commentEnd = "\n";
+	private final String parentheses = "[()]";
+	
 	public Scanner(String textInitialValue) {
 		textToScan = textInitialValue;
 	}
@@ -15,7 +16,7 @@ public class Scanner {
 	}
 	private void deleteNotTokenChars() {
 		while(!isTextEmpty() && (isAWhiteChar() || isAComment())) {
-			while(!isTextEmpty() && isAWhiteChar()) { deleteWhiteChar(); }
+			while(!isTextEmpty() && isAWhiteChar()) { deleteChar(); }
 			while(!isTextEmpty() && isAComment()) { deleteComment(); }
 		}
 	}
@@ -25,34 +26,37 @@ public class Scanner {
 	private boolean isAComment() {
 		return textToScan.substring(0, 1).matches(commentBegin);
 	}
-	private void deleteWhiteChar() {
+	private void deleteChar() {
 		textToScan = textToScan.substring(1);
 	}
 	private void deleteComment() {
-		do  {
-			textToScan = textToScan.substring(1);}
+		do  { deleteChar(); }
 		while (isTextEmpty() || !textToScan.substring(0, 1).matches(commentEnd));
 	}
-	public String get() {
+	private boolean isAParenthesis(){
+		return !isTextEmpty() && textToScan.substring(0, 1).matches(parentheses);
+	}
+	private boolean isAToken(){
+		return !isTextEmpty() && !isAWhiteChar() && !isAParenthesis();
+	}
+	public String getToken() {
 		String result = "";
-		String parentheses = "[()]";
 		
 		while(!isTextEmpty()){
 			deleteNotTokenChars();
-			if (textToScan.length() > 0 && textToScan.substring(0, 1).matches(parentheses)) {
+			
+			if (isAParenthesis()) {
 				result = textToScan.substring(0, 1);
-				textToScan = textToScan.substring(1);
+				deleteChar();
 			}
-			while (textToScan.length() > 0 && !textToScan.substring(0, 1).matches(whiteChars) && !textToScan.substring(0, 1).matches(parentheses)) {
-				result += textToScan.substring(0, 1);
-				textToScan = textToScan.substring(1);
+			else {
+				while (isAToken()) {
+					result += textToScan.substring(0, 1);
+					deleteChar();
+				}
 			}
 			return result.toLowerCase();
 		}
-		
 		return "";
-
 	}
-
-
 }
