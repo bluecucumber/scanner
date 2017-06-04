@@ -36,6 +36,7 @@ public class ScannerTest extends TestCase {
 
 	@Test
 	public void testSekwencja() {
+		System.out.println("test1");
 		assertEquals("slowo1", scanner1.get());
 		assertEquals("slowo2", scanner1.get());
 		assertEquals("slowo3", scanner1.get());
@@ -44,6 +45,7 @@ public class ScannerTest extends TestCase {
 
 	@Test
 	public void testBiale() {
+		System.out.println("test2");
 		assertEquals("element1", scanner2.get());
 		assertEquals("(", scanner2.get());
 		assertEquals("element2", scanner2.get());
@@ -53,6 +55,7 @@ public class ScannerTest extends TestCase {
 	
 	@Test
 	public void testKomentarz() {
+		System.out.println("test3");
 		assertEquals("element1", scanner3.get());
 		assertEquals("element2", scanner3.get());
 		assertEquals("", scanner3.get());
@@ -60,6 +63,7 @@ public class ScannerTest extends TestCase {
 
 	@Test
 	public void testKoniec() {
+		System.out.println("test4");
 		assertEquals("fix", scanner4.get());
 		assertEquals("", scanner4.get());
 		assertEquals("", scanner4.get());
